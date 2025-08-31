@@ -374,4 +374,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-**Built with ❤️ for the modern web**
+**Built with ❤️ for the modern web**#   D e p l o y m e n t   S t a t u s  
+ 
