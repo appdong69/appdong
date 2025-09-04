@@ -17,10 +17,13 @@ export default function AdminLoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('=== LOGIN FORM SUBMITTED ===');
+    console.log('Form data:', { email: formData.email, password: formData.password ? '[HIDDEN]' : 'missing' });
     setIsLoading(true)
     setError('')
 
     try {
+      console.log('Sending request to /api/auth/admin/login');
       const response = await fetch('/api/auth/admin/login', {
         method: 'POST',
         headers: {
@@ -29,19 +32,49 @@ export default function AdminLoginPage() {
         body: JSON.stringify(formData),
       })
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+      
       const data = await response.json()
+      console.log('Response data:', data);
 
       if (response.ok) {
+        console.log('Login successful, storing token and redirecting');
+        console.log('Token to store:', data.data.token);
+        console.log('User data to store:', data.data.user);
+        
         // Store token in localStorage
         localStorage.setItem('admin_token', data.data.token)
         localStorage.setItem('admin_user', JSON.stringify(data.data.user))
         
-        // Redirect to admin dashboard
-        router.push('/admin/dashboard')
+        // Verify storage
+        const storedToken = localStorage.getItem('admin_token');
+        const storedUser = localStorage.getItem('admin_user');
+        console.log('Stored token:', storedToken);
+        console.log('Stored user:', storedUser);
+        
+        // Add delay to ensure localStorage is written and verify storage
+         setTimeout(() => {
+           const verifyToken = localStorage.getItem('admin_token');
+           const verifyUser = localStorage.getItem('admin_user');
+           console.log('Pre-redirect verification - Token:', !!verifyToken, 'User:', !!verifyUser);
+           
+           if (verifyToken && verifyUser) {
+             console.log('Redirecting to /admin/dashboard after verification');
+             router.push('/admin/dashboard')
+           } else {
+             console.error('Storage verification failed, retrying...');
+             localStorage.setItem('admin_token', data.data.token)
+             localStorage.setItem('admin_user', JSON.stringify(data.data.user))
+             setTimeout(() => router.push('/admin/dashboard'), 100);
+           }
+         }, 200);
       } else {
+        console.log('Login failed:', data.message);
         setError(data.message || 'Login failed')
       }
     } catch (error) {
+      console.error('Network error:', error);
       setError('Network error. Please try again.')
     } finally {
       setIsLoading(false)

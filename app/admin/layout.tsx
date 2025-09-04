@@ -47,16 +47,28 @@ export default function AdminLayout({
 
   useEffect(() => {
     const checkAuth = async () => {
+      console.log('=== ADMIN LAYOUT AUTH CHECK ===');
+      console.log('Current pathname:', pathname);
+      
       // Skip authentication check for login page
       if (pathname === '/admin/login') {
+        console.log('Skipping auth check for login page');
         setIsLoading(false)
         return
       }
 
+      // Add small delay to ensure localStorage is ready after redirect
+      await new Promise(resolve => setTimeout(resolve, 50));
+      
       const token = localStorage.getItem('admin_token')
       const userData = localStorage.getItem('admin_user')
+      
+      console.log('Token exists:', !!token);
+      console.log('User data exists:', !!userData);
+      console.log('User data value:', userData);
 
       if (!token || !userData || userData === 'undefined') {
+        console.log('No valid token or user data found, clearing localStorage');
         // Clear invalid data
         localStorage.removeItem('admin_token')
         localStorage.removeItem('admin_user')
@@ -67,10 +79,14 @@ export default function AdminLayout({
 
       try {
         const parsedUser = JSON.parse(userData)
+        console.log('Parsed user data:', parsedUser);
+        
         if (parsedUser && parsedUser.id) {
+          console.log('Valid user found, setting user state');
           setUser(parsedUser)
           setIsLoading(false)
         } else {
+          console.log('Invalid user data structure');
           throw new Error('Invalid user data')
         }
       } catch (error) {
@@ -89,9 +105,22 @@ export default function AdminLayout({
 
   // Handle redirect to login when needed
   useEffect(() => {
-    if (!isLoading && !user && pathname !== '/admin/login') {
-      router.replace('/admin/login')
-    }
+    console.log('=== REDIRECT CHECK ===');
+    console.log('isLoading:', isLoading);
+    console.log('user:', user);
+    console.log('pathname:', pathname);
+    
+    // Add delay to prevent race condition with localStorage
+    const redirectTimer = setTimeout(() => {
+      if (!isLoading && !user && pathname !== '/admin/login') {
+        console.log('Redirecting to login - no user found after delay');
+        router.replace('/admin/login')
+      } else {
+        console.log('No redirect needed');
+      }
+    }, 100);
+    
+    return () => clearTimeout(redirectTimer);
   }, [isLoading, user, pathname, router])
 
   const handleLogout = () => {

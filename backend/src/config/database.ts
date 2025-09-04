@@ -101,6 +101,30 @@ export const query = async (text: string, params?: any[]): Promise<any> => {
       };
     }
     
+    // Handle client INSERT query
+    if (text.includes('INSERT INTO clients') && text.includes('RETURNING')) {
+      const clientId = params?.[0] || 'mock-client-id';
+      const email = params?.[1] || 'test@example.com';
+      const name = params?.[3] || 'Test Client';
+      const companyName = params?.[4] || 'Test Company';
+      const domainLimit = params?.[5] || 5;
+      const subscriptionPlan = params?.[6] || 'basic';
+      
+      return {
+        rows: [{
+          id: clientId,
+          email: email,
+          name: name,
+          company_name: companyName,
+          domain_limit: domainLimit,
+          subscription_plan: subscriptionPlan,
+          is_active: true,
+          created_at: new Date()
+        }],
+        rowCount: 1
+      };
+    }
+    
     // Handle other queries with empty results
     return { rows: [], rowCount: 0 };
   }

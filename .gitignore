@@ -110,3 +110,5 @@ Thumbs.db
 
 # Generated VAPID script (optional)
 generate-vapid.js
+.vercel
+.env*.local
