@@ -86,10 +86,79 @@ export const query = async (text: string, params?: any[]): Promise<any> => {
     }
     
     // Handle clients count query
-    if (text.includes('COUNT(*) as total') && text.includes('clients')) {
+    if (text.includes('COUNT(*) as count') && text.includes('clients')) {
       return {
-        rows: [{ total: '0' }],
+        rows: [{ count: '5' }],
         rowCount: 1
+      };
+    }
+    
+    // Handle active clients count query
+    if (text.includes('is_active = true') && text.includes('clients')) {
+      return {
+        rows: [{ count: '3' }],
+        rowCount: 1
+      };
+    }
+    
+    // Handle notifications count query
+    if (text.includes('push_notifications') && text.includes('SUM(successful_sends)')) {
+      return {
+        rows: [{ total: '150' }],
+        rowCount: 1
+      };
+    }
+    
+    // Handle subscribers count query
+    if (text.includes('push_subscribers') && text.includes('COUNT(*)')) {
+      return {
+        rows: [{ count: '25' }],
+        rowCount: 1
+      };
+    }
+    
+    // Handle subscriber growth query
+    if (text.includes('DATE(subscribed_at)') && text.includes('INTERVAL')) {
+      const mockGrowthData = [];
+      for (let i = 0; i < 7; i++) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        mockGrowthData.push({
+          date: date.toISOString().split('T')[0],
+          new_subscribers: Math.floor(Math.random() * 10) + 1
+        });
+      }
+      return {
+        rows: mockGrowthData,
+        rowCount: mockGrowthData.length
+      };
+    }
+    
+    // Handle recent notifications query
+    if (text.includes('push_notifications pn') && text.includes('JOIN clients c')) {
+      const mockNotifications = [
+        {
+          id: 1,
+          title: 'Welcome Notification',
+          successful_sends: 45,
+          click_count: 12,
+          sent_at: new Date(Date.now() - 86400000), // 1 day ago
+          client_name: 'Demo Client',
+          client_email: 'demo@example.com'
+        },
+        {
+          id: 2,
+          title: 'Product Update',
+          successful_sends: 38,
+          click_count: 8,
+          sent_at: new Date(Date.now() - 172800000), // 2 days ago
+          client_name: 'Test Company',
+          client_email: 'test@company.com'
+        }
+      ];
+      return {
+        rows: mockNotifications,
+        rowCount: mockNotifications.length
       };
     }
     
