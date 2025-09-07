@@ -1,15 +1,15 @@
 import express from 'express';
 import { body, query as expressQuery, validationResult } from 'express-validator';
-import { query, transaction } from '@/config/database';
-import { authenticateClient, authenticateApiKey } from '@/middleware/auth';
-import { pushRateLimiter, rateLimiter } from '@/middleware/rateLimiter';
-import { asyncHandler } from '@/middleware/errorHandler';
+import { query, transaction } from '../config/database';
+import { authenticateClient, authenticateApiKey } from '../middleware/auth';
+import { pushRateLimiter, rateLimiter } from '../middleware/rateLimiter';
+import { asyncHandler } from '../middleware/errorHandler';
 import {
   ValidationError,
   NotFoundError,
   AuthorizationError,
-} from '@/middleware/errorHandler';
-import { logger } from '@/utils/logger';
+} from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
 import { v4 as uuidv4 } from 'uuid';
 import webpush from 'web-push';
 

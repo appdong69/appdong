@@ -1,5 +1,5 @@
 import { Pool, PoolClient } from 'pg';
-import { logger } from '@/utils/logger';
+import { logger } from '../utils/logger';
 
 let pool: Pool;
 let mockMode = false;

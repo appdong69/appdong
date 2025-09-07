@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { query } from '@/config/database';
+import { query } from '../config/database';
 import { AuthenticationError, AuthorizationError } from './errorHandler';
-import { logger } from '@/utils/logger';
+import { logger } from '../utils/logger';
 
 // Extend Request interface to include user and client
 declare global {

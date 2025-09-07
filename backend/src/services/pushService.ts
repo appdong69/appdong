@@ -1,6 +1,6 @@
 import webpush from 'web-push';
-import { query } from '@/config/database';
-import { logger } from '@/utils/logger';
+import { query } from '../config/database';
+import { logger } from '../utils/logger';
 
 /**
  * Initialize the push service with VAPID keys

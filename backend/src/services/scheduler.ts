@@ -1,6 +1,6 @@
 import cron from 'node-cron';
-import { query } from '@/config/database';
-import { logger } from '@/utils/logger';
+import { query } from '../config/database';
+import { logger } from '../utils/logger';
 
 /**
  * Start the scheduler for background tasks

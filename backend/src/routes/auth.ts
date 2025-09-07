@@ -1,17 +1,17 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import { body, validationResult } from 'express-validator';
-import { query, transaction } from '@/config/database';
-import { generateToken, authenticate } from '@/middleware/auth';
-import { authRateLimiter } from '@/middleware/rateLimiter';
-import { asyncHandler } from '@/middleware/errorHandler';
+import { query, transaction } from '../config/database';
+import { generateToken, authenticate } from '../middleware/auth';
+import { authRateLimiter } from '../middleware/rateLimiter';
+import { asyncHandler } from '../middleware/errorHandler';
 import {
   ValidationError,
   AuthenticationError,
   ConflictError,
   NotFoundError,
-} from '@/middleware/errorHandler';
-import { logger } from '@/utils/logger';
+} from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();

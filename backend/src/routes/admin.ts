@@ -1,18 +1,18 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import { body, query as expressQuery, validationResult } from 'express-validator';
-import { query, transaction } from '@/config/database';
-import { authenticateAdmin } from '@/middleware/auth';
-import { adminRateLimiter } from '@/middleware/rateLimiter';
-import { asyncHandler } from '@/middleware/errorHandler';
+import { query, transaction } from '../config/database';
+import { authenticateAdmin } from '../middleware/auth';
+import { adminRateLimiter } from '../middleware/rateLimiter';
+import { asyncHandler } from '../middleware/errorHandler';
 import {
   ValidationError,
   AuthenticationError,
   AuthorizationError,
   NotFoundError,
   ConflictError,
-} from '@/middleware/errorHandler';
-import { logger } from '@/utils/logger';
+} from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
 import { v4 as uuidv4 } from 'uuid';
 import * as webpush from 'web-push';
 
@@ -476,7 +476,7 @@ router.post('/clients/:id/login-as', asyncHandler(async (req, res) => {
   }
   
   // Generate token for client
-  const { generateToken } = await import('@/middleware/auth');
+  const { generateToken } = await import('../middleware/auth');
   const token = generateToken({
     id: client.id,
     email: client.email,

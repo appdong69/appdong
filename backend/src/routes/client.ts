@@ -1,16 +1,16 @@
 import express from 'express';
 import { body, query as expressQuery, validationResult } from 'express-validator';
-import { query, transaction } from '@/config/database';
-import { authenticateClient } from '@/middleware/auth';
-import { rateLimiter } from '@/middleware/rateLimiter';
-import { asyncHandler } from '@/middleware/errorHandler';
+import { query, transaction } from '../config/database';
+import { authenticateClient } from '../middleware/auth';
+import { rateLimiter } from '../middleware/rateLimiter';
+import { asyncHandler } from '../middleware/errorHandler';
 import {
   ValidationError,
   NotFoundError,
   ConflictError,
   AuthorizationError,
-} from '@/middleware/errorHandler';
-import { logger } from '@/utils/logger';
+} from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
 import { v4 as uuidv4 } from 'uuid';
 import crypto from 'crypto';
 

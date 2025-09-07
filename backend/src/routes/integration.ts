@@ -1,13 +1,13 @@
 import express from 'express';
 import { body, param, validationResult } from 'express-validator';
-import { query } from '@/config/database';
-import { integrationRateLimiter } from '@/middleware/rateLimiter';
-import { asyncHandler } from '@/middleware/errorHandler';
+import { query } from '../config/database';
+import { integrationRateLimiter } from '../middleware/rateLimiter';
+import { asyncHandler } from '../middleware/errorHandler';
 import {
   ValidationError,
   NotFoundError,
-} from '@/middleware/errorHandler';
-import { logger } from '@/utils/logger';
+} from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
 
 const router = express.Router();
 

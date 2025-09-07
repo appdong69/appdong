@@ -1,16 +1,16 @@
 import express from 'express';
 import { query as expressQuery, validationResult } from 'express-validator';
-import { query } from '@/config/database';
-import { authenticateClient, authenticateAdmin } from '@/middleware/auth';
-import { rateLimiter } from '@/middleware/rateLimiter';
-import { asyncHandler } from '@/middleware/errorHandler';
+import { query } from '../config/database';
+import { authenticateClient, authenticateAdmin } from '../middleware/auth';
+import { rateLimiter } from '../middleware/rateLimiter';
+import { asyncHandler } from '../middleware/errorHandler';
 import {
   ValidationError,
   AuthenticationError,
   AuthorizationError,
   NotFoundError,
-} from '@/middleware/errorHandler';
-import { logger } from '@/utils/logger';
+} from '../middleware/errorHandler';
+import { logger } from '../utils/logger';
 
 const router = express.Router();
 

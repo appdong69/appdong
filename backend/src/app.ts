@@ -10,20 +10,20 @@ import path from 'path';
 dotenv.config();
 
 // Import utilities and middleware
-import { logger } from '@/utils/logger';
-import { errorHandler, notFoundHandler } from '@/middleware/errorHandler';
-import { rateLimiter } from '@/middleware/rateLimiter';
+import { logger } from './utils/logger';
+import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+import { rateLimiter } from './middleware/rateLimiter';
 
 // Import routes
-import authRoutes from '@/routes/auth';
-import adminRoutes from '@/routes/admin';
-import clientRoutes from '@/routes/client';
-import pushRoutes from '@/routes/push';
-import analyticsRoutes from '@/routes/analytics';
-import integrationRoutes from '@/routes/integration';
+import authRoutes from './routes/auth';
+import adminRoutes from './routes/admin';
+import clientRoutes from './routes/client';
+import pushRoutes from './routes/push';
+import analyticsRoutes from './routes/analytics';
+import integrationRoutes from './routes/integration';
 
 // Import database
-import { initDatabase, closeDatabase } from '@/config/database';
+import { initDatabase, closeDatabase } from './config/database';
 
 const app = express();
 

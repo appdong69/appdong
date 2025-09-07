@@ -7,24 +7,24 @@ import dotenv from 'dotenv';
 import { createServer } from 'http';
 
 // Import routes
-import authRoutes from '@/routes/auth';
-import adminRoutes from '@/routes/admin';
-import clientRoutes from '@/routes/client';
-import pushRoutes from '@/routes/push';
-import analyticsRoutes from '@/routes/analytics';
-import integrationRoutes from '@/routes/integration';
+import authRoutes from './routes/auth';
+import adminRoutes from './routes/admin';
+import clientRoutes from './routes/client';
+import pushRoutes from './routes/push';
+import analyticsRoutes from './routes/analytics';
+import integrationRoutes from './routes/integration';
 
 // Import middleware
-import { errorHandler } from '@/middleware/errorHandler';
-import { rateLimiter } from '@/middleware/rateLimiter';
-import { logger } from '@/utils/logger';
+import { errorHandler } from './middleware/errorHandler';
+import { rateLimiter } from './middleware/rateLimiter';
+import { logger } from './utils/logger';
 
 // Import database
-import { initDatabase } from '@/config/database';
+import { initDatabase } from './config/database';
 
 // Import services
-import { initPushService } from '@/services/pushService';
-import { startScheduler } from '@/services/scheduler';
+import { initPushService } from './services/pushService';
+import { startScheduler } from './services/scheduler';
 
 // Load environment variables
 dotenv.config();
