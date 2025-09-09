@@ -53,22 +53,9 @@ export default function AdminLoginPage() {
         console.log('Stored token:', storedToken);
         console.log('Stored user:', storedUser);
         
-        // Add delay to ensure localStorage is written and verify storage
-         setTimeout(() => {
-           const verifyToken = localStorage.getItem('admin_token');
-           const verifyUser = localStorage.getItem('admin_user');
-           console.log('Pre-redirect verification - Token:', !!verifyToken, 'User:', !!verifyUser);
-           
-           if (verifyToken && verifyUser) {
-             console.log('Redirecting to /admin/dashboard after verification');
-             router.push('/admin/dashboard')
-           } else {
-             console.error('Storage verification failed, retrying...');
-             localStorage.setItem('admin_token', data.data.token)
-             localStorage.setItem('admin_user', JSON.stringify(data.data.user))
-             setTimeout(() => router.push('/admin/dashboard'), 100);
-           }
-         }, 200);
+        // Simple redirect after successful login
+        console.log('Redirecting to /admin/dashboard');
+        router.replace('/admin/dashboard');
       } else {
         console.log('Login failed:', data.message);
         setError(data.message || 'Login failed')

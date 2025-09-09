@@ -68,10 +68,19 @@ export default function AdminDashboard() {
       })
 
       if (response.ok) {
-        const data = await response.json()
-        setStats(data.stats)
-        setRecentNotifications(data.recentNotifications)
-        setTopClients(data.topClients)
+        const result = await response.json()
+        const data = result.data || {}
+        setStats(data.overview || null)
+        setRecentNotifications(data.recentNotifications || [])
+        
+        // Process topClients to calculate clickRate and add missing fields
+        const processedTopClients = (data.topClients || []).map((client: any) => ({
+          ...client,
+          clickRate: client.total_sends > 0 ? (client.total_clicks / client.total_sends) * 100 : 0,
+          domain: client.email || 'N/A',
+          subscribers: client.subscriber_count || 0
+        }))
+        setTopClients(processedTopClients)
       } else {
         setError('Failed to load dashboard data')
       }
@@ -174,7 +183,7 @@ export default function AdminDashboard() {
           </div>
           <div className="overflow-hidden">
             <div className="max-h-96 overflow-y-auto">
-              {recentNotifications.length > 0 ? (
+              {recentNotifications && recentNotifications.length > 0 ? (
                 <ul className="divide-y divide-gray-200">
                   {recentNotifications.map((notification) => (
                     <li key={notification.id} className="px-6 py-4">
@@ -227,7 +236,7 @@ export default function AdminDashboard() {
           </div>
           <div className="overflow-hidden">
             <div className="max-h-96 overflow-y-auto">
-              {topClients.length > 0 ? (
+              {topClients && topClients.length > 0 ? (
                 <ul className="divide-y divide-gray-200">
                   {topClients.map((client, index) => (
                     <li key={client.id} className="px-6 py-4">
@@ -245,7 +254,7 @@ export default function AdminDashboard() {
                           </div>
                           <div className="ml-4">
                             <p className="text-sm font-medium text-gray-900">{client.name}</p>
-                            <p className="text-sm text-gray-500">{client.domain}</p>
+                            <p className="text-sm text-gray-500">{client.email || 'N/A'}</p>
                           </div>
                         </div>
                         <div className="text-right">
