@@ -254,7 +254,7 @@ export default function AdminDashboard() {
                           </div>
                           <div className="ml-4">
                             <p className="text-sm font-medium text-gray-900">{client.name}</p>
-                            <p className="text-sm text-gray-500">{client.email || 'N/A'}</p>
+                            <p className="text-sm text-gray-500">{client.domain || 'N/A'}</p>
                           </div>
                         </div>
                         <div className="text-right">
